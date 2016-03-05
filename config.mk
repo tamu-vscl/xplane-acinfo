@@ -55,7 +55,7 @@ LDFLAGS = -shared -rdynamic -nodefaultlibs -undefined_warning -m64
 INCLUDE  = -I/usr/include -I/usr/local/include
 
 # Libraries to link.
-LIBS = -lm -lGL -lGLU
+LIBS = -lm -lGL -lGLU -lbsd
 LIBDIRS = -L/usr/lib64 -L/usr/local/lib64 -L/lib64
 
 # X-Plane SDK stuff.
