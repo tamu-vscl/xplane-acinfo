@@ -17,7 +17,7 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 	strlcpy(out_desc, desc, strlen(desc) + 1);
 
 	/* Print loading information. */
-	snprintf(buf, DEFAULT_BUFSIZE, "%s: version %s loaded.", short_name,
+	snprintf(buf, DEFAULT_BUFSIZE, "%s: version %s loaded.\n", short_name,
 	         _VERSION);
 	XPLMDebugString(buf);
 
@@ -127,12 +127,14 @@ register_dr(UNUSED float call_time, UNUSED float elapsed_time, UNUSED int ctr,
 		char buf[DEFAULT_BUFSIZE];
 		XPLMSendMessageToPlugin(pid, MSG_ADD_DATAREF,
 		                        (void *) aircraft_type_dr);
-		snprintf(buf, DEFAULT_BUFSIZE, "%s: dataref \"%s\" registered.",
+		snprintf(buf, DEFAULT_BUFSIZE,
+			 "%s: dataref \"%s\" registered.\n",
 		         short_name, aircraft_type_dr);
 		XPLMDebugString(buf);
 		XPLMSendMessageToPlugin(pid, MSG_ADD_DATAREF,
 		                        (void *) aircraft_name_dr);
-		snprintf(buf, DEFAULT_BUFSIZE, "%s: dataref \"%s\" registered.",
+		snprintf(buf, DEFAULT_BUFSIZE,
+		         "%s: dataref \"%s\" registered.\n",
 		         short_name, aircraft_name_dr);
 		XPLMDebugString(buf);
 	}
