@@ -108,5 +108,5 @@ To install the Lua script(s), place them into the `Scripts` directory
 of the main FlyWithLua plugin directory.
 
 ## License
-See the (`LICENSE.md`)[LICENSE.md] file for license and copyright 
+See the [`LICENSE.md`](LICENSE.md) file for license and copyright 
 information.
