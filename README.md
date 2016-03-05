@@ -35,9 +35,11 @@ In some cases, this is then mapped to a custom name.
 
 To determine engine type, the plugin looks at engine DataRefs specific 
 to piston-engined aircraft and sees if they are nonzero.
-If this is the case, the aircraft is determined to be piston-engined;
-otherwise it is considered a jet (inclusive of turbojets, turbofans,
-and turboprops).
+If prop RPM and manifold pressure are both nonzero, the aircraft is 
+determined to be piston-engined, and if prop RPM only is nonzero, the
+aircraft is a turboprop.
+Otherwise, it is considered a jet (inclusive of turbojets and 
+turbofans).
 For the aircraft role, the aircraft's path is iterated over to find the
 common X-Plane subdirectories, which are then mapped to a type integer.
 In certain cases this is overriden with known types.

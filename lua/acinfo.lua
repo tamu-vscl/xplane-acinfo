@@ -22,22 +22,23 @@ local aircraft_types = {
     ["unknown"] = 0,
     ["jet"] = 1,
     ["piston"] = 2,
-    ["airliner"] = 4,
-    ["attack"] = 8,
-    ["cargo"] = 16,
-    ["bomber"] = 32,
-    ["ew"] = 64;
-    ["fighter"] = 128,
-    ["ga"] = 256,
-    ["glider"] = 512,
-    ["helicopter"] = 1024,
-    ["recon"] = 2048,
-    ["seaplane"] = 4096,
-    ["spacecraft"] = 8192,
-    ["tanker"] = 16384,
-    ["uav"] = 32768,
-    ["vtol"] = 65536,
-    ["xplane"] = 131072
+    ["turboprop"] = 4,
+    ["airliner"] = 8,
+    ["attack"] = 16,
+    ["cargo"] = 32,
+    ["bomber"] = 64,
+    ["ew"] =128,
+    ["fighter"] = 256,
+    ["ga"] = 512,
+    ["glider"] = 1024,
+    ["helicopter"] = 2048,
+    ["recon"] = 4096,
+    ["seaplane"] = 8192,
+    ["spacecraft"] = 16384,
+    ["tanker"] = 32768,
+    ["uav"] = 65536,
+    ["vtol"] = 131072,
+    ["xplane"] = 262144
 }
 
 
@@ -114,11 +115,15 @@ function get_actype()
     ac_type = aircraft_types["unknown"]
     --[[
         Determine if the aircraft is jet powered by seing if the manifold
-        pressure and propeller RPM are nonzero. Note that we classify
-        turboprop engines as jets.
+        pressure and propeller RPM are nonzero. A piston-engined aircraft has
+        both nonzero and a turboprop has RPM nonzero.
     --]]
-    if manifold_press > 0 and prop_rpm > 0 then
-        ac_type = bit.bxor(ac_type, aircraft_types["prop"])
+    if prop_rpm > 0 then
+        if manifold_press > 0 then
+            ac_type = bit.bxor(ac_type, aircraft_types["piston"])
+        else
+            ac_type = bit.bxor(ac_type, aircraft_types["turboprop"])
+        end
     else
         ac_type = bit.bxor(ac_type, aircraft_types["jet"])
     end
