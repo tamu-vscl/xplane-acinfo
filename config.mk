@@ -18,7 +18,7 @@ CPPFLAGS  = -D_DEFAULT_SOURCE
 CPPFLAGS += -D_POSIX_C_SOURCE=2
 CPPFLAGS += -D_FORTIFY_SOURCE=2
 # Version.
-CPPFLAGS += -D_VERSION="\"git-$(GITCOMMIT)-build-$(shell whoami)-$(shell date -u +%Y%m%dT%H%M)\""
+CPPFLAGS += -D_VERSION="\"git-$(GITCOMMIT)-build-$(shell whoami)-$(shell date -u +%Y%m%dT%H%MZ)\""
 
 # Compiler flags.
 CFLAGS += -pedantic
