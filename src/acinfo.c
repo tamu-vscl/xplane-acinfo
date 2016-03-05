@@ -9,15 +9,16 @@
 int
 XPluginStart(char *out_name, char *out_sig, char *out_desc)
 {
+	char buf[DEFAULT_BUFSIZE];
+
 	/* Add plugin information. */
 	strlcpy(out_name, name, strlen(name) + 1);
 	strlcpy(out_sig, sig, strlen(sig) + 1);
 	strlcpy(out_desc, desc, strlen(desc) + 1);
 
 	/* Print loading information. */
-	size_t bufsize = 512;
-	char *buf[bufsize];
-	snprintf(buf, bufsize, "%s: version %s loaded.", short_name, _VERSION);
+	snprintf(buf, DEFAULT_BUFSIZE, "%s: version %s loaded.", short_name,
+	         _VERSION);
 	XPLMDebugString(buf);
 
 	/* Register datarefs. */
@@ -32,7 +33,7 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 	                                         get_acname, set_acname,
 	                                         NULL, NULL);
 	aircraft_type = XPLMRegisterDataAccessor(aircraft_type_dr,
-	                                         xplmType_Inf,
+	                                         xplmType_Int,
 	                                         1,
 	                                         get_actype, set_actype,
 	                                         NULL, NULL,
@@ -43,11 +44,11 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
                                                  NULL, NULL);
 
 	/* Initialize datarefs. */
-	memset(aircraft_name_value, '\0', sizeof(char) * acname_bufsize);
+	memset(aircraft_name_value, '\0', sizeof(char) * ACNAME_BUFSIZE);
 	aircraft_type = XPLMFindDataRef(aircraft_type_dr);
 	aircraft_name = XPLMFindDataRef(aircraft_name_dr);
 	XPLMSetDatai(aircraft_type, 0);
-	XPLMSetDatab(aircraft_name, "uninitialized", 0,
+	XPLMSetDatab(aircraft_name, (void *) "uninitialized", 0,
 	             strlen("uninitialized"));
 
 	/* Register the datarefs with the DataRef Editor. */
@@ -78,19 +79,21 @@ XPluginDisable(void)
 }
 
 void
-XPluginReceiveMessage(XPLMPluginID src, int msg, UNUSED void* params)
+XPluginReceiveMessage(UNUSED XPLMPluginID src, UNUSED int msg,
+                      UNUSED void* params)
 {
 	return;
 }
 
 static int
-get_acname(UNUSED void *refcon, int *out, int offset, int max)
+get_acname(UNUSED void *refcon, void *out, int offset, int max)
 {
-	int i, n;
+	int n;
+	char tmp[ACNAME_BUFSIZE];
 	size_t name_len;
 
 	if (out == NULL) {
-		return acname_bufsize;
+		return ACNAME_BUFSIZE;
 	}
 
 	/* Calculate number of bytes to return. */
@@ -104,10 +107,8 @@ get_acname(UNUSED void *refcon, int *out, int offset, int max)
 	}
 
 	/* Copy bytes and null-terminate. */
-	for (i = 0, i < n - 1; ++i) {
-		out[i] = aircraft_name_value[i];
-	}
-	out[n] = '\0';
+	strlcpy(tmp, aircraft_name_value, n);
+	memcpy(out, (void *) tmp, n);
 	return n;
 }
 
@@ -123,16 +124,15 @@ register_dr(UNUSED float call_time, UNUSED float elapsed_time, UNUSED int ctr,
 {
 	XPLMPluginID pid = XPLMFindPluginBySignature(dresig);
 	if (pid != XPLM_NO_PLUGIN_ID) {
-		size_t bufsize = 512;
-		char *buf[bufsize];
+		char buf[DEFAULT_BUFSIZE];
 		XPLMSendMessageToPlugin(pid, MSG_ADD_DATAREF,
 		                        (void *) aircraft_type_dr);
-		snprintf(buf, bufsize, "%s: dataref \"%s\" registered.",
+		snprintf(buf, DEFAULT_BUFSIZE, "%s: dataref \"%s\" registered.",
 		         short_name, aircraft_type_dr);
 		XPLMDebugString(buf);
 		XPLMSendMessageToPlugin(pid, MSG_ADD_DATAREF,
 		                        (void *) aircraft_name_dr);
-		snprintf(buf, bufsize, "%s: dataref \"%s\" registered.",
+		snprintf(buf, DEFAULT_BUFSIZE, "%s: dataref \"%s\" registered.",
 		         short_name, aircraft_name_dr);
 		XPLMDebugString(buf);
 	}
@@ -140,12 +140,12 @@ register_dr(UNUSED float call_time, UNUSED float elapsed_time, UNUSED int ctr,
 }
 
 static void
-set_acname(UNUSED void *refcon, int *in, int offset, int max)
+set_acname(UNUSED void *refcon, void *in, int offset, int max)
 {
-	int i, n; acname_bufsize;
+	int n;
 
 	/* Calculate number of bytes to copy. */
-	n = acname_bufsize - offset;
+	n = ACNAME_BUFSIZE - offset;
 	if (n < 0) {
 		return;
 	}
@@ -154,14 +154,12 @@ set_acname(UNUSED void *refcon, int *in, int offset, int max)
 	}
 
 	/* Copy bytes and ensure null-termination. */
-	for (i = 0, i < n; ++i) {
-		aircraft_name_value[i] = in[i];
-	}
-	aircraft_name_value[n + 1] = '\0';
+	memcpy(aircraft_name_value, (char *) in, n - 1);
+	aircraft_name_value[n] = '\0';
 }
 
 static void
-set_acname(UNUSED void *refcon, int in)
+set_actype(UNUSED void *refcon, int in)
 {
 	aircraft_type_value = in;
 }

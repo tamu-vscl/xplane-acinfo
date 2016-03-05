@@ -6,11 +6,14 @@
  */
 #pragma once
 
+#include <bsd/string.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "XPLMDataAccess.h"
+#include "XPLMPlugin.h"
+#include "XPLMProcessing.h"
 #include "XPLMUtilities.h"
 
 /*
@@ -22,6 +25,13 @@
 #else
 #	define UNUSED
 #endif
+
+/* Array sizes. */
+#define DEFAULT_BUFSIZE 512
+#define ACNAME_BUFSIZE 1024
+
+/* Constants for DRE. */
+#define MSG_ADD_DATAREF 0x01000000
 
 /* Define constants to avoid X-Plane SDK magic numbers. */
 const int PLUGIN_LOAD_SUCCESS = 1;
@@ -47,13 +57,13 @@ XPLMDataRef aircraft_name = NULL;
 /* Values to hold the data. */
 int16_t aircraft_type_value = 0;
 size_t acname_bufsize = 255;
-char aircraft_name_value[acname_bufsize];
+char aircraft_name_value[ACNAME_BUFSIZE];
 
 /* Getters/setters for datarefs. */
-static int get_acname(UNUSED void *, int *, int, int);
+static int get_acname(UNUSED void *, void *, int, int);
 static int get_actype(UNUSED void *);
-static void set_acname(UNUSED void *, int *, int, int);
-static void set_acname(UNUSED void *, int);
+static void set_acname(UNUSED void *, void *, int, int);
+static void set_actype(UNUSED void *, int);
 
 /* Deferred initialization loop for registering with DataRef Editor. */
 static float register_dr(UNUSED float, UNUSED float, UNUSED int, UNUSED void *);
