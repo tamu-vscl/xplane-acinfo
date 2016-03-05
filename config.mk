@@ -14,7 +14,7 @@ endif
 CC = gcc
 
 # Preprocessor flags.
-CPPFLAGS  = -D_BSD_SOURCE
+CPPFLAGS  = -D_DEFAULT_SOURCE
 CPPFLAGS += -D_POSIX_C_SOURCE=2
 CPPFLAGS += -D_FORTIFY_SOURCE=2
 # Version.
@@ -33,7 +33,7 @@ CFLAGS += -Wcast-align
 CFLAGS += -Wstrict-overflow=5
 CFLAGS += -Wwrite-strings
 CFLAGS += -Waggregate-return
-CFLAGS += -Wcast-qual
+# CFLAGS += -Wcast-qual  # j-harris: disabled due to X-Plane SDK behavior.
 CFLAGS += -Wswitch-default
 CFLAGS += -Wswitch-enum
 CFLAGS += -Wunreachable-code
@@ -45,17 +45,18 @@ CFLAGS += -funwind-tables
 CFLAGS += -fasynchronous-unwind-tables
 CFLAGS += -fmessage-length=0
 CFLAGS += -O2
-CFLAGS += -std=c++11
+CFLAGS += -std=c99
+CFLAGS += -m64
 
 # Linker flags for plugin.
-LDFLAGS = -shared -rdynamic -nodefaultlibs -undefined_warning
+LDFLAGS = -shared -rdynamic -nodefaultlibs -undefined_warning -m64
 
 # Include directories.
 INCLUDE  = -I/usr/include -I/usr/local/include
 
 # Libraries to link.
 LIBS = -lm -lGL -lGLU
-LIBDIRS = -L/usr/lib -L/usr/local/lib
+LIBDIRS = -L/usr/lib64 -L/usr/local/lib64 -L/lib64
 
 # X-Plane SDK stuff.
 XPSDK_CPPFLAGS  = -DXPLM200
