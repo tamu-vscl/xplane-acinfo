@@ -21,7 +21,7 @@ DataRef("manifold_press", "sim/cockpit2/engine/indicators/MPR_in_hg",
 local aircraft_types = {
     ["unknown"] = 0,
     ["jet"] = 1,
-    ["prop"] = 2,
+    ["piston"] = 2,
     ["airliner"] = 4,
     ["attack"] = 8,
     ["cargo"] = 16,
