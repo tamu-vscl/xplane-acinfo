@@ -31,6 +31,7 @@
 #define ACNAME_BUFSIZE 1024
 
 /* Constants for DRE. */
+ #define XPDREF_WRITABLE 1
 #define MSG_ADD_DATAREF 0x01000000
 
 /* Define constants to avoid X-Plane SDK magic numbers. */

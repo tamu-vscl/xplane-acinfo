@@ -24,7 +24,7 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 	/* Register datarefs. */
 	aircraft_name = XPLMRegisterDataAccessor(aircraft_name_dr,
 	                                         xplmType_Data,
-	                                         1,
+	                                         XPDREF_WRITABLE,
 	                                         NULL, NULL,
 	                                         NULL, NULL,
 	                                         NULL, NULL,
@@ -34,7 +34,7 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 	                                         NULL, NULL);
 	aircraft_type = XPLMRegisterDataAccessor(aircraft_type_dr,
 	                                         xplmType_Int,
-	                                         1,
+	                                         XPDREF_WRITABLE,
 	                                         get_actype, set_actype,
 	                                         NULL, NULL,
 	                                         NULL, NULL,
