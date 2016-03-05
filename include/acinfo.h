@@ -31,7 +31,7 @@
 #define ACNAME_BUFSIZE 1024
 
 /* Constants for DRE. */
- #define XPDREF_WRITABLE 1
+#define XPDREF_WRITABLE 1
 #define MSG_ADD_DATAREF 0x01000000
 
 /* Define constants to avoid X-Plane SDK magic numbers. */
@@ -59,6 +59,7 @@ XPLMDataRef aircraft_name = NULL;
 int64_t aircraft_type_value = 0;
 size_t acname_bufsize = 255;
 char aircraft_name_value[ACNAME_BUFSIZE];
+const char *default_name = "uninitialized";
 
 /* Getters/setters for datarefs. */
 static int get_acname(UNUSED void *, void *, int, int);

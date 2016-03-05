@@ -45,11 +45,9 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 
 	/* Initialize datarefs. */
 	memset(aircraft_name_value, '\0', sizeof(char) * ACNAME_BUFSIZE);
+	strlcpy(aircraft_name_value, default_name, strlen(default_name) + 1);
 	aircraft_type = XPLMFindDataRef(aircraft_type_dr);
 	aircraft_name = XPLMFindDataRef(aircraft_name_dr);
-	XPLMSetDatai(aircraft_type, 0);
-	XPLMSetDatab(aircraft_name, (void *) "uninitialized", 0,
-	             strlen("uninitialized"));
 
 	/* Register the datarefs with the DataRef Editor. */
 	XPLMRegisterFlightLoopCallback(register_dr, 1, NULL);
