@@ -55,7 +55,7 @@ XPLMDataRef aircraft_type = NULL;
 XPLMDataRef aircraft_name = NULL;
 
 /* Values to hold the data. */
-int16_t aircraft_type_value = 0;
+int64_t aircraft_type_value = 0;
 size_t acname_bufsize = 255;
 char aircraft_name_value[ACNAME_BUFSIZE];
 
