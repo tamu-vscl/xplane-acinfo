@@ -35,31 +35,28 @@
 #define MSG_ADD_DATAREF 0x01000000
 
 /* Define constants to avoid X-Plane SDK magic numbers. */
-const int PLUGIN_LOAD_SUCCESS = 1;
-const int PLUGIN_LOAD_FAILED = 0;
-const int PLUGIN_ENABLE_SUCCESS = 1;
-const int PLUGIN_ENABLE_FAILED = 0;
+#define PLUGIN_LOAD_SUCCESS 1
+#define PLUGIN_ENABLE_SUCCESS 1
 
 /* Plugin description. */
-const char *name = "Aircraft Information Plugin";
-const char *short_name = "acinfo";
-const char *sig = "edu.tamu.vscl.acinfo";
-const char *desc = "Provides custom datarefs describing player aircraft.";
+static const char *name = "Aircraft Information Plugin";
+static const char *short_name = "acinfo";
+static const char *sig = "edu.tamu.vscl.acinfo";
+static const char *desc = "Provides custom datarefs describing aircraft.";
 
 /* Other plugin signatures. */
-const char *dresig = "xplanesdk.examples.DataRefEditor";
+static const char *dresig = "xplanesdk.examples.DataRefEditor";
 
 /* Custom datarefs. */
-const char *aircraft_type_dr = "vscl/sim/aircraft/type";
-const char *aircraft_name_dr = "vscl/sim/aircraft/name";
-XPLMDataRef aircraft_type = NULL;
-XPLMDataRef aircraft_name = NULL;
+static const char *aircraft_type_dr = "vscl/sim/aircraft/type";
+static const char *aircraft_name_dr = "vscl/sim/aircraft/name";
+/*@null@*/ static XPLMDataRef aircraft_type = NULL;
+/*@null@*/ static XPLMDataRef aircraft_name = NULL;
 
 /* Values to hold the data. */
-int64_t aircraft_type_value = 0;
-size_t acname_bufsize = 255;
-char aircraft_name_value[ACNAME_BUFSIZE];
-const char *default_name = "uninitialized";
+static int aircraft_type_value = 0;
+/*@unique@*/ static char aircraft_name_value[ACNAME_BUFSIZE];
+static const char *default_name = "unknown";
 
 /* Getters/setters for datarefs. */
 static int get_acname(UNUSED void *, void *, int, int);
