@@ -7,7 +7,6 @@
 #pragma once
 
 #include <bsd/string.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
