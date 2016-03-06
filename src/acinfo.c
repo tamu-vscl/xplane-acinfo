@@ -101,7 +101,7 @@ get_acname(/*@unused@*/ UNUSED void *refcon, void *out, int offset, int max)
 	char tmp[ACNAME_BUFSIZE];
 	size_t maxsz, n, name_len;
 
-	/* If not output pointer is given, return the array buffer size. */
+	/* If no output pointer is given, return the array buffer size. */
 	if (out == NULL) {
 		return ACNAME_BUFSIZE;
 	}
