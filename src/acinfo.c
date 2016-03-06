@@ -23,7 +23,7 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 	 * the input string.
 	 */
 	(void) snprintf(buf, DEFAULT_BUFSIZE, "%s: version %s loaded.\n",
-		        short_name, _VERSION);
+	                short_name, _VERSION);
 	XPLMDebugString(buf);
 
 	/* Register datarefs. */
@@ -47,8 +47,8 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 	                                         NULL, NULL,
 	                                         NULL, NULL,
 	                                         NULL, NULL,
-                                                 NULL, NULL);
-        /*@=nullpass@*/
+	                                         NULL, NULL);
+	/*@=nullpass@*/
 
 	/* Initialize datarefs. */
 	memset(aircraft_name_value, 0, sizeof(char) * ACNAME_BUFSIZE);
@@ -59,7 +59,7 @@ XPluginStart(char *out_name, char *out_sig, char *out_desc)
 	/* Register the datarefs with the DataRef Editor. */
 	/*@-nullpass@*/
 	XPLMRegisterFlightLoopCallback(register_dr, 1, NULL);
-        /*@=nullpass@*/
+	/*@=nullpass@*/
 
 	return PLUGIN_LOAD_SUCCESS;
 }
@@ -72,7 +72,7 @@ XPluginStop(void)
 	XPLMUnregisterFlightLoopCallback(register_dr, NULL);
 	XPLMUnregisterDataAccessor(aircraft_name);
 	XPLMUnregisterDataAccessor(aircraft_type);
-        /*@=nullpass@*/
+	/*@=nullpass@*/
 }
 
 int
@@ -132,7 +132,7 @@ static float
 register_dr(/*@unused@*/ UNUSED float call_time,
             /*@unused@*/ UNUSED float elapsed_time,
             /*@unused@*/ UNUSED int ctr,
-	    /*@unused@*/ UNUSED void *refcon)
+            /*@unused@*/ UNUSED void *refcon)
 {
 	XPLMPluginID pid = XPLMFindPluginBySignature(dresig);
 	if (pid != XPLM_NO_PLUGIN_ID) {
