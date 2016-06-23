@@ -1,3 +1,3 @@
 [submodule "ext/sdk"]
 	path = ext/sdk
-	url = git@github.tamu.edu:vscl/xplane-sdk.git
+	url = https://github.com/tamu-vscl/xplane-sdk.git
