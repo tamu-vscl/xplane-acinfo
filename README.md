@@ -69,27 +69,20 @@ Additionally, `libbsd` is required as the plugin makes use of
 
 ## Building the C Plugin
 
-ACInfo uses a traditional Makefile. 
-Compile flags are set in [`config.mk`](config.mk), and rules are placed
-in [`src/acinfo.mk`](src/acinfo.mk).
-The actual Makefile contains no user-editable code.
+ACInfo uses [CMake](https://cmake.org) as its build system and is 
+designed for an out-of-source build.
 
-To build the plugin, `cd` into the repository's directory and issue
+To build the plugin, enter the following commands in the project
+root directory:
 ```
-make -j2
+mkdir build && pushd build
+cmake ..
+make
+popd
 ```
 which will output the plugin to `lib/libacinfo.so`.
 This file will be symlinked to [`64/lin.xpl`](64/lin.xpl) for use as an
 X-Plane "fat plugin".
-To remove leftover object files, if present, run
-```
-make clean
-```
-or 
-```
-make distclean
-```
-to remove all object files, including the plugin.
 
 ## Installing the Plugin 
 ### C Plugin 
