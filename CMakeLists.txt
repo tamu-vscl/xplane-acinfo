@@ -8,8 +8,8 @@ if(POLICY CMP0043)
 endif()
 
 # Version
-set(XPA_MAJOR_VERSION 0)
-set(XPA_MINOR_VERSION 1)
+set(XPA_MAJOR_VERSION 1)
+set(XPA_MINOR_VERSION 0)
 set(XPA_PATCH_VERSION 0)
 set(XPA_VERSION ${XPA_MAJOR_VERSION}.${XPA_MINOR_VERSION}.${XPA_PATCH_VERSION})
 
@@ -23,6 +23,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${acinfo_LIBRARY_OUTPUT_DIRECTORY})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${acinfo_RUNTIME_OUTPUT_DIRECTORY})
 set(CMAKE_INSTALL_PREFIX /opt/xplane10/Resources/plugins/acinfo)
 set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
+set(FWL_PREFIX /opt/xplane10/Resources/plugins/FlyWithLua/Scripts)
 
 # X-Plane SDK defines.
 if(APPLE)
@@ -98,6 +99,9 @@ add_subdirectory(src)
 # Install fat plugin stuff.
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/64" DESTINATION
   "${CMAKE_INSTALL_PREFIX}")
+# FlyWithLua script
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/lua/acinfo.lua" DESTINATION
+  "${FWL_PREFIX}")
 
 # Build RPM
 set(CPACK_PACKAGE_VERSION ${XPA_VERSION})
@@ -107,6 +111,10 @@ set(CPACK_PACKAGE_RELEASE 1)
 set(CPACK_PACKAGE_CONTACT "Joshua Harris <joshua.a.harris@tamu.edu>")
 set(CPACK_PACKAGE_VENDOR "Vehicle Systems & Control Laboratory")
 set(CPACK_RPM_PACKAGE_LICENSE "ISC License")
+set(CPACK_RPM_PACKAGE_URL "https://github.com/tamu-vscl/xplane-acinfo")
+set(CPACK_RPM_PACKAGE_DESCRIPTION "X-Plane aircraft information plugin.")
+set(CPACK_RPM_CHANGELOG_FILE "${CMAKE_CURRENT_SOURCE_DIR}/changelog.txt")
+
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_PACKAGE_RELEASE}.${CMAKE_SYSTEM_PROCESSOR}")
 set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 include(CPack)
