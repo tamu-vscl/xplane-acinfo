@@ -43,6 +43,9 @@ turbofans).
 For the aircraft role, the aircraft's path is iterated over to find the
 common X-Plane subdirectories, which are then mapped to a type integer.
 In certain cases this is overriden with known types.
+The Lua script assumes the path convention used in the VSCL for 
+additional aircraft (e.g. from X-Plane.org); you will likely need to 
+customize this for your X-Plane deployment.
 
 ## Requirements
 
