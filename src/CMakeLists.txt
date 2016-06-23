@@ -20,3 +20,5 @@ target_link_libraries(${PROJECT_NAME}
   GLU
   bsd
 )
+
+install(TARGETS ${PROJECT_NAME} DESTINATION lib)
