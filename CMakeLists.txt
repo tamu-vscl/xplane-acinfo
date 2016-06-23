@@ -96,7 +96,8 @@ include_directories(
 add_subdirectory(src)
 
 # Install fat plugin stuff.
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/64" DESTINATION "/")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/64" DESTINATION
+  "${CMAKE_INSTALL_PREFIX}")
 
 # Build RPM
 set(CPACK_PACKAGE_VERSION ${XPA_VERSION})
